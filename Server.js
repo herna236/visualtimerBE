@@ -11,11 +11,13 @@ const port = process.env.PORT || 5000;
 
 const corsOptions = {
   origin: ['https://visualtimerf.onrender.com'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Added OPTIONS method
   allowedHeaders: ['Content-Type', 'Authorization'],
   optionsSuccessStatus: 200,
 };
 
+// Handle OPTIONS requests (preflight)
+app.options('*', cors(corsOptions));
 
 // Use CORS middleware
 app.use(cors(corsOptions));
@@ -99,7 +101,7 @@ app.get('/profile', authenticate, (req, res) => {
   });
 });
 
-//Edit user profile
+// Edit user profile
 app.put('/edit-profile', authenticate, async (req, res) => {
   console.log('Edit profile route hit');
   const { newEmail } = req.body;
@@ -124,8 +126,6 @@ app.put('/edit-profile', authenticate, async (req, res) => {
     res.status(500).json({ message: 'Server error', error });
   }
 });
-
-
 
 // Email validation function
 const validateEmail = (email) => {
@@ -186,7 +186,6 @@ app.post('/start-timer', authenticate, async (req, res) => {
     res.status(400).send('Error starting timer: ' + error.message);
   }
 });
-
 
 if (require.main === module) {
   app.listen(port, () => {
