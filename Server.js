@@ -9,19 +9,20 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000;
 
+// CORS configuration
 const corsOptions = {
   origin: ['https://visualtimerf.onrender.com'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Added OPTIONS method
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   optionsSuccessStatus: 200,
 };
 
-// Handle OPTIONS requests (preflight)
-app.options('*', cors(corsOptions));
+// Use CORS middleware first
+app.use(cors(corsOptions)); // Ensure CORS is applied before any routes or other middleware
+app.use(express.json()); // Use JSON parser middleware
 
-// Use CORS middleware
-app.use(cors(corsOptions));
-app.use(express.json()); // Using built-in express.json()
+// Handle OPTIONS requests (preflight)
+app.options('*', cors(corsOptions)); // Ensure OPTIONS is handled
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
