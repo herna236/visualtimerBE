@@ -11,7 +11,7 @@ const port = process.env.PORT || 5000;
 
 // CORS configuration
 const corsOptions = {
-  origin: ['https://frontend1-h5py.onrender.com'], 
+  origin: ['https://visualtimerf.onrender.com'],
   optionsSuccessStatus: 200, // For legacy browser support
 };
 
@@ -193,4 +193,3 @@ if (require.main === module) {
 }
 
 module.exports = app;
-
