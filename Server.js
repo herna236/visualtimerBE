@@ -9,11 +9,13 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-// CORS configuration
 const corsOptions = {
   origin: ['https://visualtimerf.onrender.com'],
-  optionsSuccessStatus: 200, // For legacy browser support
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 200,
 };
+
 
 // Use CORS middleware
 app.use(cors(corsOptions));
